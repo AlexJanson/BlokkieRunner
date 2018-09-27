@@ -8,10 +8,26 @@ public class ChunkSpawnerScript : MonoBehaviour {
     private GameObject[] chunks;
     [SerializeField]
     private GameObject obj;
+    private float timer = 0.0f;
 
-    void Start()
+    public int spawnTimer = 4;
+
+    void Update()
     {
-        Debug.Log(obj);
-        GameObject gameObj = Instantiate(chunks[Random.Range(0, chunks.Length - 1)], obj.transform.position, obj.transform.rotation);
+        timer += Time.deltaTime;
+        if((int)timer % spawnTimer == 0) {
+            chunkSpawn();
+            timer++;
+        }
+    }
+
+    public void chunkSpawn()
+    {
+        GameObject gameObj = 
+            Instantiate(
+                chunks[Random.Range(0, chunks.Length)],
+                this.transform.position,
+                this.transform.rotation
+            );
     }
 }
