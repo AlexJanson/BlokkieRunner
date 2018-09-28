@@ -22,8 +22,7 @@ public class ChunkSpawnerScript : MonoBehaviour {
     }
 
     public void chunkSpawn()
-    {
-        GameObject gameObj = 
+    { 
             Instantiate(
                 chunks[Random.Range(0, chunks.Length)],
                 this.transform.position,
