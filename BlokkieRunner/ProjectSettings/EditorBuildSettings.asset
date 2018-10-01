@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dexter.unity
     guid: a117703b2a04b0e44a6671291838ecda
+  - enabled: 1
+    path: Assets/Scenes/Alex.unity
+    guid: 5d52dd08128f27b458abd501acb6911f
   m_configObjects: {}

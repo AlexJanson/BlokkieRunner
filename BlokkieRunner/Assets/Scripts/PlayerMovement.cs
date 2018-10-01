@@ -4,21 +4,65 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public float speed = 3.0f;
-    public float sideSpeed = 6.0f;
+    [SerializeField]
+    private float moveSpeed = 6f;
+    [SerializeField]
+    private float jumpSpeed = 6f;
 
-    void FixedUpdate() {
-        Vector2 pos = transform.position;
-        pos.x += speed * Time.deltaTime;
+    private bool _grounded = false, _jumped = false, _dead = false;
+    private int _score = 0;
 
-        if (Input.GetKey("down")) {
-            pos.y -= sideSpeed * Time.deltaTime;
+    private Rigidbody rb;
+    private Vector3 velocity;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        velocity = Vector3.right * moveSpeed;
+
+        GroundCheck();
+
+        if(_dead) {
+            Time.timeScale = 0;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetButtonDown("Jump")) {
+            rb.AddForce(new Vector3(0, jumpSpeed, 0), ForceMode.Impulse);
+            _jumped = true;
         }
 
-        if (Input.GetKey("up")) {
-            pos.y += sideSpeed * Time.deltaTime;
-        }
+        rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+    }
 
-        transform.position = pos;
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Wall" || collision.gameObject.name == "SideWall_Bottom") {
+            _dead = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.name == "Triggered") {
+            _score++;
+        }
+    }
+
+    private void GroundCheck()
+    {
+        float DisstanceToTheGround = GetComponent<Collider>().bounds.extents.y;
+        _grounded = Physics.Raycast(transform.position, Vector3.down, DisstanceToTheGround + 0.1f);
+    }
+
+    public bool IsDead()
+    {
+        return _dead;
     }
 }

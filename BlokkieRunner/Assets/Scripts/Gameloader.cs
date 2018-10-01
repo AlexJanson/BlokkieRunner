@@ -5,7 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Gameloader : MonoBehaviour {
 
-    public void gameloader(){
-        SceneManager.LoadScene("SampleScene");
+    public void LoadScene(string arg)
+    {
+        SceneManager.LoadScene(arg);
+    }
+
+    public Scene GetCurrentScene()
+    {
+        return SceneManager.GetActiveScene();
     }
 }
