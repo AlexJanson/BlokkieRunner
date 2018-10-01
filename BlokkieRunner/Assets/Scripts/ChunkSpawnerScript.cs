@@ -8,25 +8,51 @@ public class ChunkSpawnerScript : MonoBehaviour {
     private GameObject[] chunks;
     [SerializeField]
     private GameObject obj;
+    [SerializeField]
+    private List<GameObject> chunksList = new List<GameObject>();
+
     private float timer = 0.0f;
+    private bool _paused = false;
 
     public int spawnTimer = 4;
 
-    void Update()
+    private void Update()
     {
-        timer += Time.deltaTime;
-        if((int)timer % spawnTimer == 0) {
-            chunkSpawn();
-            timer++;
+        if (!_paused) {
+            timer += Time.deltaTime;
+            if ((int)timer % spawnTimer == 0) {
+                ChunkSpawn();
+                timer++;
+            }
+        }
+
+        if(chunksList.Count > 5) {
+            Destroy(chunksList[0]);
+            chunksList.RemoveAt(0);
         }
     }
 
-    public void chunkSpawn()
+    private void ChunkSpawn()
     { 
-            Instantiate(
-                chunks[Random.Range(0, chunks.Length)],
-                this.transform.position,
-                this.transform.rotation
-            );
+        chunksList.Add(Instantiate(
+            chunks[Random.Range(0, chunks.Length)],
+            this.transform.position,
+            this.transform.rotation
+        ));
+    }
+
+    public void Pause()
+    {
+        _paused = true;
+    }
+
+    public void Resume()
+    {
+        _paused = false;
+    }
+
+    public bool IsPaused()
+    {
+        return _paused;
     }
 }

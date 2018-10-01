@@ -5,15 +5,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
-    private float moveSpeed = 6f;
+    private float _moveSpeed = 6f;
     [SerializeField]
-    private float jumpSpeed = 6f;
+    private float _jumpSpeed = 6f;
 
-    private bool _grounded = false, _jumped = false, _dead = false;
+    private bool _grounded = false, _dead = false, _paused = false;
     private int _score = 0;
 
     private Rigidbody rb;
     private Vector3 velocity;
+
+    private Vector3 savedVelocity;
+    private Vector3 savedAngularVelocity;
 
     private void Start()
     {
@@ -22,23 +25,23 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Update()
     {
-        velocity = Vector3.right * moveSpeed;
+        velocity = Vector3.right * _moveSpeed;
 
         GroundCheck();
 
-        if(_dead) {
+        if (Input.GetButtonDown("Jump")) {
+            Jump();
+        }
+
+        if (_dead) {
             Time.timeScale = 0;
         }
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetButtonDown("Jump")) {
-            rb.AddForce(new Vector3(0, jumpSpeed, 0), ForceMode.Impulse);
-            _jumped = true;
-        }
-
-        rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+        if (!_paused)
+            rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -64,5 +67,44 @@ public class PlayerMovement : MonoBehaviour {
     public bool IsDead()
     {
         return _dead;
+    }
+
+    public bool IsGrounded()
+    {
+        return _grounded;
+    }
+
+    public void Jump()
+    {
+        if(rb.velocity.y < 0)
+            rb.AddForce(new Vector3(0, Mathf.Abs(rb.velocity.y / 2), 0), ForceMode.Impulse);
+
+        rb.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
+    }
+
+    public void Pause()
+    {
+        savedVelocity = rb.velocity;
+        savedAngularVelocity = rb.angularVelocity;
+        rb.isKinematic = true;
+        _paused = true;
+    }
+
+    public void Resume()
+    {
+        rb.isKinematic = false;
+        rb.AddForce(savedVelocity, ForceMode.Impulse);
+        rb.AddTorque(savedAngularVelocity, ForceMode.Impulse);
+        _paused = false;
+    }
+
+    public bool IsPaused()
+    {
+        return _paused;
+    }
+
+    public int GetScore()
+    {
+        return _score;
     }
 }
