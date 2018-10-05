@@ -8,33 +8,53 @@ public class ChunkSpawnerScript : MonoBehaviour {
     private GameObject[] chunks;
     [SerializeField]
     private GameObject obj;
-    [SerializeField]
-    private List<GameObject> chunksList = new List<GameObject>();
+
+    private List<GameObject> _chunksList = new List<GameObject>();
+    private List<GameObject> _cloudList = new List<GameObject>();
 
     private float timer = 0.0f;
     private bool _paused = false;
+    private Vector3 _cloudSpawnOffset;
 
     public int spawnTimer = 4;
+    public GameObject cloudPrefab;
+
+    private void Start()
+    {
+        _cloudSpawnOffset = new Vector3(2f, Random.Range(-2f, 2f), 0f);
+    }
 
     private void Update()
     {
         if (!_paused) {
+
             timer += Time.deltaTime;
             if ((int)timer % spawnTimer == 0) {
                 ChunkSpawn();
                 timer++;
             }
-        }
 
-        if(chunksList.Count > 5) {
-            Destroy(chunksList[0]);
-            chunksList.RemoveAt(0);
+            if (Random.Range(0, 500) < 2)
+                _cloudList.Add(Instantiate(cloudPrefab,
+                    this.transform.position + _cloudSpawnOffset,
+                    this.transform.rotation
+                ));
+
+            if (_chunksList.Count > 5) {
+                Destroy(_chunksList[0]);
+                _chunksList.RemoveAt(0);
+            }
+
+            if (_cloudList.Count > 5) {
+                Destroy(_cloudList[0]);
+                _cloudList.RemoveAt(0);
+            }
         }
     }
 
     private void ChunkSpawn()
-    { 
-        chunksList.Add(Instantiate(
+    {
+        _chunksList.Add(Instantiate(
             chunks[Random.Range(0, chunks.Length)],
             this.transform.position,
             this.transform.rotation

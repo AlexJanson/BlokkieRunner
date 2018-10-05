@@ -32,10 +32,6 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButtonDown("Jump")) {
             Jump();
         }
-
-        if (_dead) {
-            Time.timeScale = 0;
-        }
     }
 
     private void FixedUpdate()

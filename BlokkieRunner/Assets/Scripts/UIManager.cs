@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour {
         _pauseMenuAnim = _pauseMenu.GetComponent<Animator>();
     }
 
-    void Update () {
+    private void Update () {
         if (Input.GetKeyDown("escape")) {
             if (!_paused) {
                 _pauseMenuAnim.Play("Pause Menu Fade In");

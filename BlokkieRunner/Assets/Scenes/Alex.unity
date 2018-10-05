@@ -1010,8 +1010,9 @@ MonoBehaviour:
   - {fileID: 1956800738277336, guid: 9b475f5b165a72f45a2e4217078bf86b, type: 2}
   - {fileID: 1204555600703956, guid: 20e0fbf03b0ecad4f81b6eba8df62f49, type: 2}
   obj: {fileID: 1420965171}
-  chunksList: []
   spawnTimer: 2
+  cloudPrefab: {fileID: 1067468627529720, guid: 81c8191182bdc468e810f0bbdc7bff34,
+    type: 2}
 --- !u!114 &1791212774
 MonoBehaviour:
   m_ObjectHideFlags: 0
