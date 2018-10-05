@@ -27,11 +27,18 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Update()
     {
+<<<<<<< HEAD
         GroundCheck();
 
         if(_idle)
             velocity = Vector3.right * _moveSpeed;
 
+=======
+
+        GroundCheck();
+        if(_idle)
+            velocity = Vector3.right * _moveSpeed;
+>>>>>>> 11be53a6337cd5bdeef1940d0e8d2c8371be6370
         if (!_idle && Input.GetButtonDown("Jump")) {
             Jump();
         }
@@ -99,10 +106,15 @@ public class PlayerMovement : MonoBehaviour {
 
     public void SetIdle(bool idle)
     {
+<<<<<<< HEAD
         if (idle)
             rb.isKinematic = false;
         else if (idle)
             rb.isKinematic = true;
+=======
+        if(
+            rb.isKinematic = false;
+>>>>>>> 11be53a6337cd5bdeef1940d0e8d2c8371be6370
     }
 
     public bool IsIdle()
