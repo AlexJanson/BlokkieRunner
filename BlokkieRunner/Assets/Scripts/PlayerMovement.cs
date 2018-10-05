@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
@@ -12,33 +13,28 @@ public class PlayerMovement : MonoBehaviour {
     private bool _grounded = false, _dead = false, _paused = false, _idle = true;
     private int _score = 0;
 
-    private Rigidbody rb;
-    private Vector3 velocity;
+    private Rigidbody _rb;
+    private Vector3 _velocity;
 
-    private Vector3 savedVelocity;
-    private Vector3 savedAngularVelocity;
+    private Vector3 _savedVelocity;
+    private Vector3 _savedAngularVelocity;
 
+    private SpriteRenderer _spriteRenderer;
    
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
+        _rb = GetComponent<Rigidbody>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _rb.isKinematic = true;
     }
 
     private void Update()
     {
-<<<<<<< HEAD
         GroundCheck();
+         
+        if(!_idle)
+            _velocity = Vector3.right * _moveSpeed;
 
-        if(_idle)
-            velocity = Vector3.right * _moveSpeed;
-
-=======
-
-        GroundCheck();
-        if(_idle)
-            velocity = Vector3.right * _moveSpeed;
->>>>>>> 11be53a6337cd5bdeef1940d0e8d2c8371be6370
         if (!_idle && Input.GetButtonDown("Jump")) {
             Jump();
         }
@@ -46,8 +42,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (!_paused)
-            rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+        if (!_paused && !_idle)
+            _rb.MovePosition(_rb.position + _velocity * Time.fixedDeltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -82,39 +78,39 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Jump()
     {
-        if(rb.velocity.y < 0)
-            rb.AddForce(new Vector3(0, Mathf.Abs(rb.velocity.y / 2), 0), ForceMode.Impulse);
+        if(_rb.velocity.y < 0)
+            _rb.AddForce(new Vector3(0, Mathf.Abs(_rb.velocity.y / 2), 0), ForceMode.Impulse);
 
-        rb.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
+        _rb.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
     }
 
     public void Pause()
     {
-        savedVelocity = rb.velocity;
-        savedAngularVelocity = rb.angularVelocity;
-        rb.isKinematic = true;
+        _savedVelocity = _rb.velocity;
+        _savedAngularVelocity = _rb.angularVelocity;
+        _rb.isKinematic = true;
         _paused = true;
     }
 
     public void Resume()
     {
-        rb.isKinematic = false;
-        rb.AddForce(savedVelocity, ForceMode.Impulse);
-        rb.AddTorque(savedAngularVelocity, ForceMode.Impulse);
+        _rb.isKinematic = false;
+        _rb.AddForce(_savedVelocity, ForceMode.Impulse);
+        _rb.AddTorque(_savedAngularVelocity, ForceMode.Impulse);
         _paused = false;
     }
 
     public void SetIdle(bool idle)
     {
-<<<<<<< HEAD
-        if (idle)
-            rb.isKinematic = false;
-        else if (idle)
-            rb.isKinematic = true;
-=======
-        if(
-            rb.isKinematic = false;
->>>>>>> 11be53a6337cd5bdeef1940d0e8d2c8371be6370
+        if (idle) {
+            _idle = true;
+            _rb.velocity = Vector3.zero;
+            _rb.isKinematic = true;
+            Debug.Log(_idle);
+        } else if (!idle) {
+            _idle = false;
+            _rb.isKinematic = false;
+        }
     }
 
     public bool IsIdle()
@@ -130,5 +126,10 @@ public class PlayerMovement : MonoBehaviour {
     public int GetScore()
     {
         return _score;
+    }
+
+    public void SetSprite(Sprite sprite)
+    {
+        _spriteRenderer.sprite = sprite;
     }
 }

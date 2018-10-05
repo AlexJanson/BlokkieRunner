@@ -13,7 +13,7 @@ public class ChunkSpawnerScript : MonoBehaviour {
     private List<GameObject> _cloudList = new List<GameObject>();
 
     private float timer = 0.0f;
-    private bool _paused = false;
+    private bool _paused = false, _idle = true;
     private Vector3 _cloudSpawnOffset;
 
     public int spawnTimer = 4;
@@ -26,7 +26,7 @@ public class ChunkSpawnerScript : MonoBehaviour {
 
     private void Update()
     {
-        if (!_paused) {
+        if (!_paused && !_idle) {
 
             timer += Time.deltaTime;
             if ((int)timer % spawnTimer == 0) {
@@ -69,6 +69,20 @@ public class ChunkSpawnerScript : MonoBehaviour {
     public void Resume()
     {
         _paused = false;
+    }
+
+    public void SetIdle(bool idle)
+    {
+        if (idle)
+            _idle = true;
+        else if (!idle) {
+            _idle = false;
+        }
+    }
+
+    public bool IsIdle()
+    {
+        return _idle;
     }
 
     public bool IsPaused()
