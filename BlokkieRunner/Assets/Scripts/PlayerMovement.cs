@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     private float _jumpSpeed = 6f;
 
-    private bool _grounded = false, _dead = false, _paused = false;
+    private bool _grounded = false, _dead = false, _paused = false, _idle = true;
     private int _score = 0;
 
     private Rigidbody rb;
@@ -18,18 +18,21 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 savedVelocity;
     private Vector3 savedAngularVelocity;
 
+   
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
     }
 
     private void Update()
     {
-        velocity = Vector3.right * _moveSpeed;
-
         GroundCheck();
 
-        if (Input.GetButtonDown("Jump")) {
+        if(_idle)
+            velocity = Vector3.right * _moveSpeed;
+
+        if (!_idle && Input.GetButtonDown("Jump")) {
             Jump();
         }
     }
@@ -92,6 +95,19 @@ public class PlayerMovement : MonoBehaviour {
         rb.AddForce(savedVelocity, ForceMode.Impulse);
         rb.AddTorque(savedAngularVelocity, ForceMode.Impulse);
         _paused = false;
+    }
+
+    public void SetIdle(bool idle)
+    {
+        if (idle)
+            rb.isKinematic = false;
+        else if (idle)
+            rb.isKinematic = true;
+    }
+
+    public bool IsIdle()
+    {
+        return _idle;
     }
 
     public bool IsPaused()
