@@ -106,7 +106,6 @@ public class PlayerMovement : MonoBehaviour {
             _idle = true;
             _rb.velocity = Vector3.zero;
             _rb.isKinematic = true;
-            Debug.Log(_idle);
         } else if (!idle) {
             _idle = false;
             _rb.isKinematic = false;

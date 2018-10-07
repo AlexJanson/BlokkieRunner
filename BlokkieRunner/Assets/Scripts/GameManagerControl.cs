@@ -17,15 +17,15 @@ public class GameManagerControl : MonoBehaviour {
     private PlayerSkinChange _playerSkinChange;
 
     public GameObject ui;
-    /*public List<MyButton> _skinsList = new List<MyButton>();*/
-    public List<Sprite> _skinsList = new List<Sprite>();
+    public List<MyButton> _skinsList = new List<MyButton>();
 
-    private bool _idle = true;
+    private bool _idle = true, _skinButtonsCreated = false;
 
     public GameObject buttonPrefab;
-
     private UnityAction<Sprite> action;
-    public Sprite sprite;
+
+    [SerializeField]
+    private GameObject _startScreen;
 
     private void Awake()
     {
@@ -61,6 +61,7 @@ public class GameManagerControl : MonoBehaviour {
         if(_idle) {
             if(Input.GetButtonDown("Jump") && !_playerMovement.IsDead()) {
                 SetIdle(false);
+                _startScreen.SetActive(false);
             }
         }
 
@@ -69,10 +70,13 @@ public class GameManagerControl : MonoBehaviour {
         }
     }
 
-    private void InitSkinButtons()
+    public void InitSkinButtons()
     {
-        for(int i = 0; i < _skinsList.Count; i++) {
-            buttonCreater.CreateSkinButton(buttonPrefab, ui, _skinsList[i], action);
+        if (!_skinButtonsCreated) {
+            for (int i = 0; i < _skinsList.Count; i++) {
+                buttonCreater.CreateSkinButton(buttonPrefab, ui, _skinsList[i].sprite, action, _skinsList[i].name);
+                _skinButtonsCreated = true;
+            }
         }
     }
 
@@ -103,9 +107,5 @@ public class GameManagerControl : MonoBehaviour {
 public class MyButton
 {
     public Sprite sprite;
-
-    public MyButton(Sprite sprite)
-    {
-        this.sprite = sprite;
-    }
+    public string name;
 }
