@@ -19,8 +19,12 @@ public class ChunkSpawnerScript : MonoBehaviour {
     public int spawnTimer = 4;
     public GameObject cloudPrefab;
 
+    [SerializeField]
+    private UIManager _uiManager;
+
     private void Start()
     {
+        _uiManager.replayEvent += OnReplay;
         _cloudSpawnOffset = new Vector3(2f, Random.Range(-2f, 2f), 0f);
     }
 
@@ -88,5 +92,18 @@ public class ChunkSpawnerScript : MonoBehaviour {
     public bool IsPaused()
     {
         return _paused;
+    }
+
+    public void OnReplay()
+    {
+        foreach(GameObject obj in _chunksList) {
+            Destroy(obj);
+        }
+        foreach (GameObject obj in _cloudList) {
+            Destroy(obj);
+        }
+
+        _chunksList.Clear();
+        _cloudList.Clear();
     }
 }

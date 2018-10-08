@@ -40,6 +40,7 @@ public class GameManagerControl : MonoBehaviour {
         buttonCreater = GetComponent<ButtonCreater>();
 
         _playerMovement.deathEvent += OnPlayerDeath;
+        _uIManager.replayEvent += OnReplay;
     }
 
     private void ChangePlayerSkins(Sprite sprite)
@@ -63,7 +64,7 @@ public class GameManagerControl : MonoBehaviour {
         if(_idle) {
             if(Input.GetButtonDown("Jump") && !_playerMovement.IsDead()) {
                 SetIdle(false);
-                _startScreen.SetActive(false);
+                _uIManager.GetStartScreen().SetActive(false);
             }
         }
 
@@ -106,9 +107,12 @@ public class GameManagerControl : MonoBehaviour {
 
     public void OnPlayerDeath()
     {
-        Debug.Log("Player has died!");
-        //unsubscribe from deathEvent delegate
-        _playerMovement.deathEvent -= OnPlayerDeath;
+        //Debug.Log("Player has died!");
+    }
+
+    public void OnReplay()
+    {
+        
     }
 }
 

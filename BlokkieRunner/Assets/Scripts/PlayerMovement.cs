@@ -20,15 +20,22 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 _savedAngularVelocity;
 
     private SpriteRenderer _spriteRenderer;
+    [SerializeField]
+    private UIManager _uiManager;
 
     public delegate void DeathDelegate();
     public event DeathDelegate deathEvent;
+
+    public delegate void ScoreChangeDelegate(int score);
+    public event ScoreChangeDelegate scoreChangedEvent; 
    
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rb.isKinematic = true;
+
+        _uiManager.replayEvent += OnReplay;
     }
 
     private void Update()
@@ -54,13 +61,6 @@ public class PlayerMovement : MonoBehaviour {
         if (collision.gameObject.name == "Wall" || collision.gameObject.name == "SideWall_Bottom") {
             _dead = true;
             Die();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.name == "Triggered") {
-            _score++;
         }
     }
 
@@ -141,5 +141,21 @@ public class PlayerMovement : MonoBehaviour {
         if (deathEvent != null)
             deathEvent();
         //logic for the player
+    }
+
+    public void OnReplay()
+    {
+        transform.position = Vector3.zero;
+        _dead = false;
+        _score = 0;
+        if (scoreChangedEvent != null)
+            scoreChangedEvent(_score);
+    }
+
+    public void AddScore(int amount)
+    {
+        _score+=amount;
+        if (scoreChangedEvent != null)
+            scoreChangedEvent(_score);
     }
 }

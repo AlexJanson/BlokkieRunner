@@ -56,10 +56,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4992096093244294}
   - component: {fileID: 65725322393427184}
+  - component: {fileID: 114072845583350632}
   m_Layer: 0
   m_Name: Tiggered
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -253,3 +254,14 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114072845583350632
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1814777333506742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a3a0520ab347f4b801208ba679bd7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
