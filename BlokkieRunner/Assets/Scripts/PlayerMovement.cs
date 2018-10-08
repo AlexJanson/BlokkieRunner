@@ -20,6 +20,9 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 _savedAngularVelocity;
 
     private SpriteRenderer _spriteRenderer;
+
+    public delegate void DeathDelegate();
+    public event DeathDelegate deathEvent;
    
     private void Start()
     {
@@ -50,6 +53,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (collision.gameObject.name == "Wall" || collision.gameObject.name == "SideWall_Bottom") {
             _dead = true;
+            Die();
         }
     }
 
@@ -130,5 +134,12 @@ public class PlayerMovement : MonoBehaviour {
     public void SetSprite(Sprite sprite)
     {
         _spriteRenderer.sprite = sprite;
+    }
+
+    public void Die()
+    {
+        if (deathEvent != null)
+            deathEvent();
+        //logic for the player
     }
 }

@@ -38,6 +38,8 @@ public class GameManagerControl : MonoBehaviour {
         _playerSkinChange = _player.GetComponent<PlayerSkinChange>();
         action = ChangePlayerSkins;
         buttonCreater = GetComponent<ButtonCreater>();
+
+        _playerMovement.deathEvent += OnPlayerDeath;
     }
 
     private void ChangePlayerSkins(Sprite sprite)
@@ -100,6 +102,13 @@ public class GameManagerControl : MonoBehaviour {
             _playerMovement.SetIdle(_idle);
         if(_chunkSpawner.IsIdle() != idle)
             _chunkSpawner.SetIdle(_idle);
+    }
+
+    public void OnPlayerDeath()
+    {
+        Debug.Log("Player has died!");
+        //unsubscribe from deathEvent delegate
+        _playerMovement.deathEvent -= OnPlayerDeath;
     }
 }
 
