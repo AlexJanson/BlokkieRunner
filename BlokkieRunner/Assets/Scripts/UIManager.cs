@@ -58,7 +58,8 @@ public class UIManager : MonoBehaviour {
     }
 
     public void OnPlayerDeath()
-    { 
+    {
+        _deathScreen.GetComponentInChildren<Button>().interactable = true;
         _deathScreenAnim.Play("Death Screen Fly In");
     }
 
@@ -78,6 +79,7 @@ public class UIManager : MonoBehaviour {
             replayEvent();
 
         _deathScreenAnim.Play("New State");
+        _deathScreen.GetComponentInChildren<Button>().interactable = false;
         _startScreen.SetActive(true);
 
         _fadeScreenAnim.Play("Fade In");

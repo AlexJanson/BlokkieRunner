@@ -62,15 +62,15 @@ public class GameManagerControl : MonoBehaviour {
         }
 
         if(_idle) {
-            if(Input.GetButtonDown("Jump") && !_playerMovement.IsDead()) {
+            if(Input.GetButtonDown("Jump") && !_playerMovement.IsDead() && _playerMovement.IsIdle()) {
                 SetIdle(false);
                 _uIManager.GetStartScreen().SetActive(false);
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A)) {
+        /*if (Input.GetKeyDown(KeyCode.A)) {
             InitSkinButtons();
-        }
+        }*/
     }
 
     public void InitSkinButtons()
