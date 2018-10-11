@@ -806,11 +806,11 @@ RectTransform:
   m_Father: {fileID: 879798890}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: -1080}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &425074185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1042,6 +1042,10 @@ MonoBehaviour:
     name: Superman
   - sprite: {fileID: 21300000, guid: d115993bd36ae4ab781a0847bdaa57bd, type: 3}
     name: Toad
+  - sprite: {fileID: 21300000, guid: d42ede2d6962b408fa11a080ec25be9b, type: 3}
+    name: Zombob
+  - sprite: {fileID: 21300000, guid: dad548a7885d9440e9d2fb6d0c13524d, type: 3}
+    name: Foxy
   buttonPrefab: {fileID: 1093859449460740, guid: e7b2c21ee3708574cb1c87ac7da42360,
     type: 2}
   _startScreen: {fileID: 742402971}
@@ -2672,6 +2676,8 @@ MonoBehaviour:
   - {fileID: 1906531594086904, guid: f8208b472ea117c4ea722da83f17b8e9, type: 2}
   - {fileID: 1956800738277336, guid: 9b475f5b165a72f45a2e4217078bf86b, type: 2}
   - {fileID: 1204555600703956, guid: 20e0fbf03b0ecad4f81b6eba8df62f49, type: 2}
+  - {fileID: 1999687955586704, guid: 166ae64d861c3954b9301c86fcf40d39, type: 2}
+  - {fileID: 1194751555589344, guid: 246561a7b040dcd44bf55fc243e45cd4, type: 2}
   obj: {fileID: 1420965171}
   spawnTimer: 2
   cloudPrefab: {fileID: 1067468627529720, guid: 81c8191182bdc468e810f0bbdc7bff34,
